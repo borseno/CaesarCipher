@@ -1,4 +1,7 @@
-﻿open System
+﻿// dotnet run key=value1 text=value2 
+
+open System
+open Microsoft.Extensions.Configuration
 
 let table = ['а';'б';'в';'г';'д';'е';'ё';'ж';'з';'и';'й';'к';'л';'м';'н';'о';'п';'р';'с';'т';'у';'ф';'х';'ц';'ч';'ш';'щ';'ъ';'ы';'ь';'э';'ю';'я'] 
 
@@ -30,6 +33,8 @@ let decryptCaesar = caesar decryption
 
 [<EntryPoint>]
 let main argv =
+    let config = ConfigurationBuilder().AddCommandLine(argv).Build()
     Console.OutputEncoding <- System.Text.Encoding.Unicode
-    printfn "%s" (decryptCaesar "алиса" "прщуым ъй епръвцниф ёдой эюцмы уихумлфгя апс йамфщ у 1984 гопь. ан пьнхпоччшил, гыа есчс ты пъзуиллън воухажнъъдь иэшальучуатз к ьачръдве ъыьрыючфо кчжиа ишз ъли ычитонды адьнг алфъм, то иыа лидсэо бж ъэожщьп пръяцдуьь сутрцдиффусциф кгякъла смжъэа. дъффое нщцмя фмця шлхъра ъъдавлфссь нъцго чсйь кьигивът ьриыыагрлэъчеэуай гъфавоччюкох, ца в 2000 гъме, бллладаьз аднът ъзвръднох ьрзвфхастф к оллфшдичръьой цщъптълваффс, ъдей ьхалъън воыфатиюе у жиуцн.")
+    printfn "%s" (decryptCaesar config.["key"] config.["text"])
+    Console.ReadKey() |> ignore
     0 // return an integer exit code
